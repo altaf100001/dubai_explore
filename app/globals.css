@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{ --navy:#0b1b2b; --gold:#d4af37; --playfair:'Playfair Display', ui-serif, Georgia, serif; }
+body{ color:#0f172a; }
+.container{ @apply mx-auto max-w-6xl px-6; }
+.font-serif{ font-family: var(--playfair); }
+
+.shad-card{@apply rounded-2xl border border-slate-200 bg-white;}
+.shad-input{@apply w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:ring-2 focus:ring-slate-200;}
+.shad-textarea{@apply w-full h-28 rounded-xl border border-slate-300 px-4 py-3 outline-none focus:ring-2 focus:ring-slate-200;}
+
+.btn{ @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 font-medium; }
+.btn-gold{ @apply bg-[var(--gold)] text-[var(--navy)] hover:brightness-110; }
+.btn-dark{ @apply bg-[var(--navy)] text-white hover:bg-[#102840]; }
+.btn-ghost{ @apply border border-white/70 text-white hover:bg-white/10; }
+
+/* Hover polish */
+.shad-card{ transition: transform .2s ease, box-shadow .2s ease; }
+.shad-card:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(2,6,23,.08); }
+@media (max-width:640px){ .container{ padding-left: 16px; padding-right: 16px; } }
