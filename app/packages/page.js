@@ -1,3 +1,4 @@
+import FallbackImage from '@/components/fallback-image';
 export const metadata = { title: 'Packages - Know Dubai' };
 const LIST = [
   { title:'Discover Dubai', slug:'discover-dubai', price:'From $799', img:'https://images.unsplash.com/photo-1534237710431-e2fc698436d0?q=80&w=1600&auto=format&fit=crop' },
@@ -13,7 +14,7 @@ export default function Packages(){
     <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
       {LIST.map(p => (
         <a key={p.slug} href={`/packages/${p.slug}?source=list_card`} className="shad-card overflow-hidden">
-          <img src={p.img} onError={(e)=>{ e.currentTarget.src = `/images/${p.slug.replace(/[^a-z-]/g,"")||"pkg"}.png`; }} alt={p.title} className="aspect-[16/10] w-full h-auto object-cover"/>
+          <FallbackImage src={p.img} fallback={`/images/${p.slug.replace(/[^a-z-]/g,"")||"pkg"}.png`} alt={p.title} className="aspect-[16/10] w-full h-auto object-cover"/>
           <div className="p-5">
             <div className="flex items-center justify-between">
               <h3 className="font-medium text-[var(--navy)]">{p.title}</h3>
