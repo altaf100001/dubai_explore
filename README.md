@@ -1,4 +1,4 @@
-# Know Dubai – Next.js (Tailwind, shadcn-style, Redux, sitemap)
+# Know Dubai – Final polished build (Next.js + Tailwind + Redux + framer-motion + sitemap)
 
 Run:
 ```
@@ -10,4 +10,4 @@ Build + sitemap:
 npm run build
 npm start
 ```
-Set `FORMSPREE_ID` in `.env.local` to forward leads.
+Optional: set `FORMSPREE_ID` in `.env.local` for live lead forwarding.

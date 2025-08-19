@@ -12,11 +12,12 @@ body{ color:#0f172a; }
 .shad-textarea{@apply w-full h-28 rounded-xl border border-slate-300 px-4 py-3 outline-none focus:ring-2 focus:ring-slate-200;}
 
 .btn{ @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 font-medium; }
-.btn-gold{ @apply bg-[var(--gold)] text-[var(--navy)] hover:brightness-110; }
+.btn-gold{ @apply bg-[var(--gold)] text-[var(--navy)] hover:brightness-110; box-shadow: 0 8px 20px rgba(212,175,55,.25); }
+.btn-gold:hover{ box-shadow: 0 10px 26px rgba(212,175,55,.35); }
 .btn-dark{ @apply bg-[var(--navy)] text-white hover:bg-[#102840]; }
 .btn-ghost{ @apply border border-white/70 text-white hover:bg-white/10; }
 
-/* Hover polish */
 .shad-card{ transition: transform .2s ease, box-shadow .2s ease; }
 .shad-card:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(2,6,23,.08); }
+
 @media (max-width:640px){ .container{ padding-left: 16px; padding-right: 16px; } }

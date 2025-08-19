@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setLead } from '@/store';
 import { GoldButton, GhostButton } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
 const SLIDES = [
   { title: 'Discover Dubai', subtitle: "Perfect introduction to Dubai's icons & experiences.", img: 'https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=1600&auto=format&fit=crop', pkg: 'discover-dubai' },
@@ -12,12 +13,12 @@ const SLIDES = [
 ];
 
 const CARDS = [
-  { title: 'Discover Dubai', price: 'From $799', slug: 'discover-dubai' },
-  { title: 'Exotic Package (5D/6N)', price: 'From $1,499', slug: 'exotic-5d6n' },
-  { title: 'Adventure Package', price: 'From $1,299', slug: 'adventure' },
-  { title: 'Destination Wedding Package', price: 'Custom', slug: 'wedding' },
-  { title: 'Events & Business Visit', price: 'From $1,899', slug: 'events-business' },
-  { title: 'Food Mania & Shopping', price: 'From $999', slug: 'food-shopping' },
+  { title: 'Discover Dubai', price: 'From $799', slug: 'discover-dubai', img: 'https://images.unsplash.com/photo-1534237710431-e2fc698436d0?q=80&w=1600&auto=format&fit=crop' },
+  { title: 'Exotic Package (5D/6N)', price: 'From $1,499', slug: 'exotic-5d6n', img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop' },
+  { title: 'Adventure Package', price: 'From $1,299', slug: 'adventure', img: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1600&auto=format&fit=crop' },
+  { title: 'Destination Wedding Package', price: 'Custom', slug: 'wedding', img: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop' },
+  { title: 'Events & Business Visit', price: 'From $1,899', slug: 'events-business', img: 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop' },
+  { title: 'Food Mania & Shopping', price: 'From $999', slug: 'food-shopping', img: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1600&auto=format&fit=crop' },
 ];
 
 export default function Home(){
@@ -27,12 +28,12 @@ export default function Home(){
   const dispatch = useDispatch();
 
   useEffect(() => { timerRef.current = setInterval(()=>setIndex(i=>(i+1)%SLIDES.length), 5000); return ()=>clearInterval(timerRef.current); }, []);
-
   const goTo = (i) => setIndex((i+SLIDES.length)%SLIDES.length);
   const goPackage = (slug) => router.push(`/packages/${slug}?source=hero`);
   const goLead = (source, pkg='') => { dispatch(setLead({ source, pkg })); router.push(`/contact?source=${source}&pkg=${pkg}`); }
 
   return (<main>
+    {/* HERO */}
     <section className="relative">
       <div className="relative h-[72vh] overflow-hidden">
         {SLIDES.map((s, i) => (
@@ -41,14 +42,15 @@ export default function Home(){
             <div className="absolute inset-0 bg-black/30"/>
             <div className="absolute inset-0 flex items-center">
               <div className="container">
-                <div className="w-full md:w-2/3 lg:w-1/2">
+                <motion.div className="w-full md:w-2/3 lg:w-1/2 relative" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6}}>
+                  <div className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-black/30 to-black/10 backdrop-blur-sm"></div>
                   <h1 className="font-serif text-4xl md:text-5xl text-white tracking-tight">{s.title}</h1>
                   <p className="mt-4 text-white/90 text-lg">{s.subtitle}</p>
                   <div className="mt-6 flex items-center gap-3">
                     <GoldButton onClick={()=>goPackage(s.pkg)}>View Package</GoldButton>
                     <GhostButton onClick={()=>goLead('hero_cta', s.pkg)}>Get Quote</GhostButton>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -61,28 +63,63 @@ export default function Home(){
       </div>
     </section>
 
+    {/* MARQUEE */}
     <div className="bg-[var(--navy)] text-white">
       <div className="container py-3 text-sm opacity-90">World's Safest City • Tax-Free Income • Luxury Lifestyle • Global Business Hub • World-Class Infrastructure</div>
     </div>
 
+    {/* KNOW DUBAI */}
     <section id="know-dubai" className="container py-16">
-      <div className="grid grid-cols-12 gap-8 items-start">
-        <div className="col-span-12 md:col-span-7">
-          <h2 className="font-serif text-3xl text-[var(--navy)]">Know Dubai</h2>
-          <p className="mt-4 text-slate-700 leading-relaxed">Dubai has transformed from a desert outpost into one of the world's most vibrant and luxurious cities.</p>
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {["Safest City","Culinary Paradise","Luxury Lifestyle","A Place to Call Home"].map(t=>(
-              <div key={t} className="rounded-2xl border border-slate-200 p-5">
-                <div className="font-medium text-[var(--navy)]">{t}</div>
-                <p className="mt-2 text-sm text-slate-600">Explore how Dubai delivers on {t.toLowerCase()} with world-class amenities.</p>
-              </div>
-            ))}
+      <div className="grid grid-cols-12 gap-8 items-center">
+        {/* Text */}
+        <motion.div
+          className="col-span-12 md:col-span-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="font-serif text-3xl md:text-4xl text-[var(--navy)]">Know Dubai</h2>
+          <p className="mt-4 text-slate-700 leading-relaxed">
+            Dubai is where futuristic skylines meet warm Arabian hospitality. By day, marvel at soaring
+            landmarks and pristine beaches; by night, dine on rooftop terraces, cruise the Marina, and
+            wander vibrant souks and designer districts.
+          </p>
+          <p className="mt-3 text-slate-700 leading-relaxed">
+            Whether you’re planning a luxury holiday, a business venture, or a long-stay experience,
+            Dubai blends comfort, safety, and spectacle in a way few cities can.
+          </p>
+          <ul className="mt-5 space-y-2 text-slate-700">
+            <li>• <b>Safest global hub</b> with world-class infrastructure</li>
+            <li>• <b>Luxury lifestyle</b>: 5★ resorts, fine dining, private yachts</li>
+            <li>• <b>Iconic attractions</b>: Burj Khalifa, Desert Safari, Palm Jumeirah</li>
+            <li>• <b>Tax-free income</b> and thriving business ecosystem</li>
+          </ul>
+          <div className="mt-6 flex gap-3">
+            <a href="/packages?source=know_cta" className="btn btn-gold">Explore Packages</a>
+            <a href="/contact?source=know_cta" className="btn btn-dark">Plan My Trip</a>
           </div>
-        </div>
-        <div className="col-span-12 md:col-span-5"><div className="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-slate-100"/></div>
+        </motion.div>
+
+        {/* Image with fallback */}
+        <motion.div
+          className="col-span-12 md:col-span-6"
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <img
+            src="https://images.unsplash.com/photo-1539693010220-8cfd10bc4d0b?q=80&w=1400&auto=format&fit=crop"
+            onError={(e) => { e.currentTarget.src = '/images/know-side.png'; }}
+            alt="Dubai skyline & lifestyle"
+            className="w-full h-auto rounded-2xl object-cover shadow-[0_20px_60px_rgba(2,6,23,.15)]"
+          />
+        </motion.div>
       </div>
     </section>
 
+    {/* PACKAGES */}
     <section id="packages" className="bg-slate-50">
       <div className="container py-16">
         <div className="flex items-end justify-between">
@@ -90,23 +127,24 @@ export default function Home(){
           <a href="/packages?source=home_viewall" className="text-sm text-[var(--navy)] underline underline-offset-4">View all</a>
         </div>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {CARDS.map(p=>(
-            <div key={p.slug} className="shad-card overflow-hidden">
-              <div className="aspect-[16/10] w-full bg-slate-100"/>
+          {CARDS.map((p,i)=>(
+            <motion.div key={p.slug} className="shad-card overflow-hidden" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:i*0.05, duration:0.4}}>
+              <img src={p.img} onError={(e)=>{ e.currentTarget.src = `/images/${p.slug.replace(/[^a-z-]/g,"")||"pkg"}.png`; }} alt={p.title} className="aspect-[16/10] w-full h-auto object-cover"/>
               <div className="p-5">
                 <div className="flex items-center justify-between"><h3 className="font-medium text-[var(--navy)]">{p.title}</h3><span className="text-sm text-slate-600">{p.price}</span></div>
                 <p className="mt-2 text-sm text-slate-600">Curated highlights • Flexible itinerary • Premium support</p>
                 <div className="mt-4 flex gap-3">
                   <a href={`/packages/${p.slug}?source=home_card`} className="text-sm text-[var(--navy)] underline underline-offset-4">View details →</a>
-                  <button onClick={()=>goLead('home_card_cta', p.slug)} className="text-sm text-[var(--navy)] bg-[var(--gold)]/20 hover:bg-[var(--gold)]/30 px-3 py-1 rounded-full">Get Quote</button>
+                  <a href={`/contact?source=home_card_cta&pkg=${p.slug}`} className="text-sm text-[var(--navy)] bg-[var(--gold)]/20 hover:bg-[var(--gold)]/30 px-3 py-1 rounded-full">Get Quote</a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
     </section>
 
+    {/* WORK/BUSINESS/INVEST remain same as earlier build ... */}
     <section id="work" className="container py-16">
       <h2 className="font-serif text-3xl text-[var(--navy)]">Work in Dubai</h2>
       <p className="mt-4 max-w-3xl text-slate-700">Exceptional career opportunities with tax-free income…</p>
